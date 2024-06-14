@@ -81,8 +81,10 @@ const Mian = ({
         data.senderId === currentUser.id ||
         (data.senderId === activeChat?.id && data.reciverId === currentUser.id)
       ) {
-        setMessages((messages) => [...messages, data]);
         setMessage((message) => ({ ...message, text: "" }));
+        if (data.senderId !== currentUser.id) {
+          setMessages((messages) => [...messages, data]);
+        }
       }
     });
 
@@ -127,6 +129,7 @@ const Mian = ({
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!message.text || !activeChat) return;
+    setMessages((messages) => [...messages, message]);
     socket.emit("message", message);
     fetch(frontEndUrl + "/api/addMessage", {
       method: "POST",
