@@ -146,7 +146,7 @@ const Mian = ({
 
   if (!activeChat)
     return (
-      <div className="w-[55%]  bg-gray-100 h-screen flex items-center justify-center">
+      <div className="w-[55%] bg-gray-100 h-screen flex items-center justify-center">
         <h1 className="text-lg font-semibold">No Chat Selected</h1>
       </div>
     );

@@ -53,13 +53,13 @@ export default function Home({
       //   }
       // });
     });
-  }, [lastMessage]);
+  }, [lastMessageArray]);
 
   return (
     <div className="flex justify-between">
       <div
         className={`${
-          isSidebarOpen ? "w-[350px]" : "w-[80px] "
+          isSidebarOpen ? "w-[22%]" : "w-[80px] "
         } bg-gray-100 border-r h-screen overflow-y-auto transition-all duration-500 ease-in `}
       >
         <div className="header flex items-center justify-between drop-shadow-lg p-3 border-b">
@@ -104,7 +104,6 @@ export default function Home({
                     msg.reciverId === currentUser.id) ||
                   (msg.reciverId === user.id && msg.senderId === currentUser.id)
               );
-
               return (
                 <div
                   className="usercard cursor-pointer border-t border-b flex gap-2 my-2 items-center w-full justify-between p-2"
@@ -126,17 +125,17 @@ export default function Home({
                     {isSidebarOpen && (
                       <div className="">
                         <p className="">{user.name?.slice(0, 15)}</p>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-between w-full">
                           <p
                             className={`${
                               isUnreadMsg?.senderId === user.id &&
                               isUnreadMsg.reciverId === currentUser.id
                                 ? "text-black"
                                 : "text-gray-500"
-                            }  self-end text-sm `}
+                            }  self-end text-sm truncate`}
                           >
                             {userHasNewMessage.slice(-1)[0]
-                              ? userHasNewMessage.slice(-1)[0].text.slice(0, 30)
+                              ? userHasNewMessage.slice(-1)[0].text
                               : lastMessageInAll
                                   .sort((a, b) => {
                                     return (
@@ -144,20 +143,22 @@ export default function Home({
                                       Number(new Date(b.createdAt!).getTime())
                                     );
                                   })
-                                  .slice(-1)[0]
-                                  .text.slice(0, 30)}
+                                  .slice(-1)[0].text}
                           </p>
-                          {isUnreadMsg?.senderId === user.id &&
-                            isUnreadMsg.reciverId === currentUser.id && (
-                              <div className="flex items-center gap-2">
-                                <div className="h-2 w-2 rounded-full bg-green-400" />
-                                <span className="text-sm">(New Message)</span>
-                              </div>
-                            )}
                         </div>
                       </div>
                     )}
                   </div>
+                  {isUnreadMsg?.senderId === user.id &&
+                    isUnreadMsg.reciverId === currentUser.id && (
+                      <div
+                        className={`${
+                          userHasNewMessage.length < 10 ? "size-3" : "size-4"
+                        } flex items-center justify-center p-1 text-[9px] rounded-full bg-green-400`}
+                      >
+                        {userHasNewMessage.length}
+                      </div>
+                    )}
                 </div>
               );
             }
@@ -170,7 +171,7 @@ export default function Home({
         currentUser={currentUser}
       />
 
-      <div className="w-[350px]">
+      <div className="w-[23%]">
         <RightSidebar users={users} currentUser={currentUser} />
       </div>
     </div>
