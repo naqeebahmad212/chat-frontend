@@ -136,14 +136,16 @@ export default function Home({
                           >
                             {userHasNewMessage.slice(-1)[0]
                               ? userHasNewMessage.slice(-1)[0].text
-                              : lastMessageInAll
+                              : lastMessageInAll.length > 0
+                              ? lastMessageInAll
                                   .sort((a, b) => {
                                     return (
                                       Number(new Date(a.createdAt!).getTime()) -
                                       Number(new Date(b.createdAt!).getTime())
                                     );
                                   })
-                                  .slice(-1)[0].text}
+                                  .slice(-1)[0].text
+                              : ""}
                           </p>
                         </div>
                       </div>
