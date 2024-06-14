@@ -128,7 +128,7 @@ const Mian = ({
     e.preventDefault();
     if (!message.text || !activeChat) return;
     socket.emit("message", message);
-    fetch("http://localhost:3000/api/addMessage", {
+    fetch(frontEndUrl + "/api/addMessage", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
