@@ -5,8 +5,11 @@ import { Message } from "@prisma/client";
 
 // Define types for context value
 
-export const backendUrl = "http://localhost:5000";
-export const frontEndUrl = "http://localhost:3000";
+// export const backendUrl = "http://localhost:5000";
+export const backendUrl =
+  "https://realitme-app-backend-production.up.railway.app";
+// export const frontEndUrl = "http://localhost:3000";
+export const frontEndUrl = "https://chat-frontend-beige.vercel.app";
 export type MessageContextType = {
   lastMessage: Message | undefined;
   setLastMessage: React.Dispatch<React.SetStateAction<Message | undefined>>;
