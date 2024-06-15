@@ -183,7 +183,7 @@ const Mian = ({
         </div>
       </div>
 
-      <div className="message-container custom-scrollbar h-[80%] overflow-y-auto bg-gray-0">
+      <div className="message-container custom-scrollbar h-[70%] md:h-[80%] overflow-y-auto bg-gray-0">
         <div className="p-2">
           {messages.length > 0 &&
             messages
