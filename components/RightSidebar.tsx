@@ -1,8 +1,9 @@
 "use client";
-import { addFriend } from "@/lib/actions/user.actions";
+import { revalidatePathFun } from "@/lib/actions/user.actions";
 import { useUser } from "@clerk/nextjs";
 import { User } from "@prisma/client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React, { useState, useTransition } from "react";
 
 const RightSidebar = ({
@@ -12,12 +13,36 @@ const RightSidebar = ({
   users: User[];
   currentUser: User;
 }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [activeUserId, setActiveUserId] = useState<string>("");
   const senderId = currentUser?.id;
-  const [pending, startTransition] = useTransition();
+  const path = usePathname();
 
   const addFriendHandler = (reciverId: string) => {
-    startTransition(async () => {
-      await addFriend({ rcvId: reciverId, sndId: senderId });
+    setIsLoading(true);
+    fetch("/api/addFriend", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ reciverId, senderId }),
+    }).then(async () => {
+      await revalidatePathFun(path);
+      setIsLoading(false);
+    });
+  };
+
+  const deleteFriendHandler = (friendId: string) => {
+    setIsLoading(true);
+    fetch("/api/deleteFriend", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ friendId, currentUserId: senderId }),
+    }).then(async () => {
+      await revalidatePathFun(path);
+      setIsLoading(false);
     });
   };
   return (
@@ -49,13 +74,28 @@ const RightSidebar = ({
                   <p className="">{user.name?.slice(0, 15)}</p>
                 </div>
                 {user.friends?.includes(senderId) ? (
-                  <button>Remove</button>
+                  <button
+                    disabled={isLoading}
+                    onClick={() => {
+                      setActiveUserId(user.id);
+                      deleteFriendHandler(user.id);
+                    }}
+                    className="text-sm text-red-600"
+                  >
+                    {isLoading && activeUserId === user.id
+                      ? "Deleting"
+                      : "Delete"}
+                  </button>
                 ) : (
                   <button
-                    onClick={() => addFriendHandler(user.id)}
-                    className="justify-self-end text-blue-600"
+                    disabled={isLoading}
+                    onClick={() => {
+                      addFriendHandler(user.id);
+                      setActiveUserId(user.id);
+                    }}
+                    className="justify-self-end text-blue-600 text-sm"
                   >
-                    {pending ? "Adding" : "Add"}
+                    {isLoading && activeUserId === user.id ? "Adding" : "Add"}
                   </button>
                 )}
               </div>

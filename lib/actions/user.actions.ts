@@ -34,35 +34,41 @@ export const getUsers= async ()=>{
 
 
 
-export const addFriend=async({rcvId,sndId} :{rcvId:string,sndId:string})=>{
-   try {
-    const rcvr= await prisma.user.update({
-        where:{id : rcvId},
-        data:{
-           friends:{
-            push:sndId
-           }
+// export const addFriend=async({rcvId,sndId} :{rcvId:string,sndId:string})=>{
+//    try {
+//     const rcvr= await prisma.user.update({
+//         where:{id : rcvId},
+//         data:{
+//            friends:{
+//             push:sndId
+//            }
             
-        },
+//         },
         
-    })
-
-
-    const sender= await prisma.user.update({
-        where:{id : sndId},
-        data:{  
-            friends:{
-                push:rcvId
-            }
-        }
-    })
-    revalidatePath('/')
+//     })
     
-   } catch (error) {
-    console.log(error)
-   }
+//     const sender= await prisma.user.update({
+//         where:{id : sndId},
+//         data:{  
+//             friends:{
+//                 push:rcvId
+//             }
+//         }
+//     })
+//     revalidatePath('/')
+    
+//    } catch (error) {
+//     console.log(error)
+//    }
+
+// }
+
+
+export const revalidatePathFun=async(path:string)=>{
+    revalidatePath(path)
 
 }
+
 
 
 export const fetchFriends=async(id:string)=>{

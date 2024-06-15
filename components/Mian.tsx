@@ -19,6 +19,7 @@ import {
   backendUrl,
   frontEndUrl,
 } from "@/context/Message";
+import { extractTime } from "@/utils";
 
 export interface Message {
   text: string;
@@ -130,6 +131,7 @@ const Mian = ({
     e.preventDefault();
     if (!message.text || !activeChat) return;
     setMessages((messages) => [...messages, message]);
+    message.createdAt = new Date();
     socket.emit("message", message);
     fetch(frontEndUrl + "/api/addMessage", {
       method: "POST",
@@ -146,7 +148,7 @@ const Mian = ({
 
   if (!activeChat)
     return (
-      <div className="w-[55%] bg-gray-100 h-screen flex items-center justify-center">
+      <div className="flex-1 bg-gray-100 h-screen flex items-center justify-center">
         <h1 className="text-lg font-semibold">No Chat Selected</h1>
       </div>
     );
@@ -159,7 +161,7 @@ const Mian = ({
     );
 
   return (
-    <div className="w-[55%] bg-gray-100 h-screen">
+    <div className="flex-1 bg-gray-100 h-screen">
       <div className="header w-full border-b drop-shadow-lg flex items-center justify-between p-3">
         <div className="flex items-center gap-2">
           {" "}
@@ -179,7 +181,7 @@ const Mian = ({
           <span>{activeChat?.name}</span>
         </div>
       </div>
-      <div className="message-container custom-scrollbar h-[80%] overflow-y-auto bg-gray-0">
+      <div className="message-container custom-scrollbar h-[76%] md:h-[80%] overflow-y-auto bg-gray-0">
         <div className="p-2">
           {messages.length > 0 &&
             messages
@@ -191,6 +193,14 @@ const Mian = ({
               })
               .map((message, index) => {
                 const ifMyMessage = message.senderId === currentUser.id;
+                let date: Date = new Date(message.createdAt!);
+
+                let options: Intl.DateTimeFormatOptions = {
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                };
+                let timeString = date.toLocaleTimeString("en-US", options);
 
                 return (
                   <div
@@ -199,15 +209,25 @@ const Mian = ({
                   >
                     {ifMyMessage ? (
                       <div key={index} className=" ">
-                        <p className="bg-green-300 p-1 mr-auto mt-2 rounded-lg inline-block pr-3 max-w-[66.66%]">
-                          {message.text}
-                        </p>
+                        <div className="bg-green-300 p-1 mr-auto mt-2 rounded-lg inline-block pr-3 max-w-[66.66%] text-sm">
+                          <p className="flex ">
+                            {message.text}
+                            <span className="text-[8px]  ml-3 mt-[6px] ">
+                              {extractTime(message.createdAt!)}
+                            </span>
+                          </p>
+                        </div>
                       </div>
                     ) : (
-                      <div key={index} className="text-end ">
-                        <p className="bg-white p-1 ml-auto mt-2 rounded-lg inline-block pr-3 max-w-[66.66%]">
-                          {message.text}
-                        </p>
+                      <div key={index} className="flex justify-end ">
+                        <div className="bg-white relative p-1 ml-auto mt-2 rounded-lg inline-block pr-3 max-w-[66.66%] text-sm">
+                          <p className="flex ">
+                            {message.text}
+                            <span className="text-[8px]  ml-3 mt-[6px] ">
+                              {timeString}
+                            </span>
+                          </p>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -221,7 +241,7 @@ const Mian = ({
           submitHandler(e);
         }}
       >
-        <div className="input w-full  h-[10%] flex items-center justify-around gap-2">
+        <div className="input w-full  h-[10%] flex items-center justify-around gap-2 ">
           <input
             type="text"
             className="w-full rounded-full outline-none p-2 px-4 border "
