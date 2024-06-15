@@ -116,6 +116,12 @@ const Mian = ({
     }
   }, [activeChatInfo, messages]);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [messages]);
+
   // filtering massegs
   useEffect(() => {
     if (!activeChatInfo) return;
@@ -190,7 +196,7 @@ const Mian = ({
         </div>
       </div>
 
-      <div className="message-container custom-scrollbar h-[80%] overflow-y-auto bg-gray-0">
+      <div className="message-container custom-scrollbar h-[82%] overflow-y-auto bg-gray-0">
         <div className="p-2">
           {messages.length > 0 &&
             messages
@@ -264,6 +270,7 @@ const Mian = ({
             }
             value={message.text}
             ref={inputRef}
+            autoFocus
           />
           <button
             type="submit"
