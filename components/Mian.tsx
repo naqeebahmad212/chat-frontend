@@ -20,6 +20,7 @@ import {
   frontEndUrl,
 } from "@/context/Message";
 import { extractTime } from "@/utils";
+import shareIcon from "../assets/share.svg";
 
 export interface Message {
   text: string;
@@ -162,7 +163,7 @@ const Mian = ({
 
   return (
     <div className="flex-1 bg-gray-100 h-screen">
-      <div className="header w-full border-b drop-shadow-lg flex items-center justify-between p-3">
+      <div className="header w-full border-b drop-shadow-lg flex items-center justify-between sticky top-0 p-3">
         <div className="flex items-center gap-2">
           {" "}
           {activeChat.image ? (
@@ -181,7 +182,8 @@ const Mian = ({
           <span>{activeChat?.name}</span>
         </div>
       </div>
-      <div className="message-container custom-scrollbar h-[76%] md:h-[80%] overflow-y-auto bg-gray-0">
+
+      <div className="message-container custom-scrollbar h-[80%] overflow-y-auto bg-gray-0">
         <div className="p-2">
           {messages.length > 0 &&
             messages
@@ -241,7 +243,7 @@ const Mian = ({
           submitHandler(e);
         }}
       >
-        <div className="input w-full  h-[10%] flex items-center justify-around gap-2 ">
+        <div className="input w-full  h-[10%] flex items-center justify-around gap-1 ">
           <input
             type="text"
             className="w-full rounded-full outline-none p-2 px-4 border "
@@ -256,8 +258,11 @@ const Mian = ({
             }
             value={message.text}
           />
-          <button type="submit" className="p-2 px-4 border rounded-full">
-            Send
+          <button
+            type="submit"
+            className="p-2  border rounded-full drop-shadow-lg bg-white"
+          >
+            <Image src={shareIcon} alt="send" width={25} height={25} />
           </button>
         </div>
       </form>

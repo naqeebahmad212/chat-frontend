@@ -38,7 +38,6 @@ export default function Home({
   const [isConversationActive, setIsConversationActive] = useState(false);
   const [friendsActive, setFriendsActive] = useState(false);
   const [findFriendActive, setFindFriendsActive] = useState(false);
-  console.log(isConversationActive, friendsActive, findFriendActive);
 
   if (!messageContext) {
     throw new Error(
@@ -185,25 +184,23 @@ export default function Home({
                           height={40}
                           className="size-8 lg:size-10 rounded-full"
                         />
-                        {isSidebarOpen && (
-                          <div className="">
-                            <p className="text-sm md:text-[16px]">
-                              {user.name?.slice(0, 15)}
+                        <div className="">
+                          <p className="text-sm md:text-[16px]">
+                            {user.name?.slice(0, 15)}
+                          </p>
+                          <div className="flex items-center justify-between w-full">
+                            <p
+                              className={`${
+                                isUnreadMsg?.senderId === user.id &&
+                                isUnreadMsg.reciverId === currentUser.id
+                                  ? "text-black"
+                                  : "text-gray-500"
+                              }  self-end md:text-[10px] xl:text-sm truncate`}
+                            >
+                              {eachUserLastMessage}
                             </p>
-                            <div className="flex items-center justify-between w-full">
-                              <p
-                                className={`${
-                                  isUnreadMsg?.senderId === user.id &&
-                                  isUnreadMsg.reciverId === currentUser.id
-                                    ? "text-black"
-                                    : "text-gray-500"
-                                }  self-end md:text-[10px] xl:text-sm truncate`}
-                              >
-                                {eachUserLastMessage}
-                              </p>
-                            </div>
                           </div>
-                        )}
+                        </div>
                       </div>
                       <div className="flex flex-col justify-center items-center">
                         {isUnreadMsg?.senderId === user.id &&
@@ -219,11 +216,10 @@ export default function Home({
                               {userHasNewMessage.length}
                             </div>
                           )}
-                        {isSidebarOpen && (
-                          <div className="text-sm text-gray-700">
-                            {lastMsgTime}
-                          </div>
-                        )}
+
+                        <div className="text-sm text-gray-700">
+                          {lastMsgTime}
+                        </div>
                       </div>
                     </div>
                   );
