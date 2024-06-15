@@ -85,8 +85,8 @@ export default function Home({
   }, []);
 
   return (
-    <>
-      <div className="flex justify-between h-screen relative">
+    <div className="h-screen relative bg-gray-100">
+      <div className="flex justify-between h-[93%] md:h-full ">
         {friendsActive && (
           <div
             className={` 
@@ -119,7 +119,7 @@ export default function Home({
                 <h1>DigiChat</h1>
               </div>
             </div>
-            <div>
+            <div className="h-[90%] overflow-y-auto">
               {friends.map((user) => {
                 // ====================last message from database=============================
                 if (user.id !== currentUser?.id) {
@@ -249,6 +249,6 @@ export default function Home({
         setFindFriendsActive={setFindFriendsActive}
         setIsFriendsActive={setFriendsActive}
       />
-    </>
+    </div>
   );
 }

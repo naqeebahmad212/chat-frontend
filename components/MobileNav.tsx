@@ -14,7 +14,7 @@ const MobileNav = ({
   setIsFriendsActive: Dispatch<SetStateAction<boolean>>;
 }) => {
   return (
-    <div className="flex gap-3 w-full max-h-[200px] justify-around absolute bottom-0 right-0  md:hidden p-3 border-t rounded-t-full drop-shadow-xl bg-transparent filter">
+    <div className="flex gap-3 w-full h-[7%] justify-around absolute bottom-0 right-0  md:hidden p-3 border-t rounded-t-full drop-shadow-xl bg-transparent filter">
       <span
         onClick={() => {
           setIsFriendsActive(true);
