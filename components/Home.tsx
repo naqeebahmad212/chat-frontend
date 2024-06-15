@@ -85,7 +85,7 @@ export default function Home({
   }, []);
 
   return (
-    <div className="h-screen relative bg-gray-100">
+    <div className="main-sec relative bg-gray-100">
       <div className="flex justify-between h-[93%] md:h-full ">
         {friendsActive && (
           <div

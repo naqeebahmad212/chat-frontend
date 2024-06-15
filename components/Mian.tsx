@@ -50,6 +50,7 @@ const Mian = ({
   const { lastMessage, setLastMessage } = messageContext;
   const [loading, setLoading] = useState(false);
   const lastMessageRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [activeChatInfo, setActiveChatInfo] = useState<UserWithMessages | null>(
     null
@@ -80,11 +81,13 @@ const Mian = ({
     });
     socket.on("messageReceived", (data) => {
       setLastMessage(data);
+      // if (inputRef.current) inputRef.current.focus();
       if (
         data.senderId === currentUser.id ||
         (data.senderId === activeChat?.id && data.reciverId === currentUser.id)
       ) {
         setMessage((message) => ({ ...message, text: "" }));
+
         if (data.senderId !== currentUser.id) {
           setMessages((messages) => [...messages, data]);
         }
@@ -184,7 +187,7 @@ const Mian = ({
         </div>
       </div>
 
-      <div className="message-container custom-scrollbar h-[85%] overflow-y-auto bg-gray-0">
+      <div className="message-container custom-scrollbar h-[78%] overflow-y-auto bg-gray-0">
         <div className="p-2">
           {messages.length > 0 &&
             messages
@@ -246,6 +249,7 @@ const Mian = ({
       >
         <div className="input w-full  h-[10%] flex items-center justify-around gap-1 ">
           <input
+            ref={inputRef}
             type="text"
             className="w-full rounded-full outline-none p-2 px-4 border "
             placeholder="Type your message here"

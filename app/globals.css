@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.main-sec {
+  height: 100dvh;
+  overflow: hidden;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 12px; /* Width of the entire scrollbar */
 }
