@@ -46,7 +46,7 @@ const RightSidebar = ({
     });
   };
   return (
-    <div className="w-full bg-gray-100 border-l h-screen">
+    <div className="w-full bg-gray-100 border-l h-full overflow-y-auto">
       <div className="header w-full border-b drop-shadow-lg p-3">
         <div className="flex items-center gap-2">
           <p className="font-bold text-lg text-center w-full py-[2.3px]">

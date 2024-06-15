@@ -162,8 +162,8 @@ const Mian = ({
     );
 
   return (
-    <div className="flex-1 bg-gray-100 h-screen">
-      <div className="header w-full border-b drop-shadow-lg flex items-center justify-between sticky top-0 p-3">
+    <div className="flex-1 bg-gray-100 h-full">
+      <div className="header w-full border-b drop-shadow-lg flex items-center justify-between sticky top-0 p-3 bg-gray-100 z-[999]">
         <div className="flex items-center gap-2">
           {" "}
           {activeChat.image ? (
@@ -183,7 +183,7 @@ const Mian = ({
         </div>
       </div>
 
-      <div className="message-container custom-scrollbar h-[70%] md:h-[80%] overflow-y-auto bg-gray-0">
+      <div className="message-container custom-scrollbar h-[80%] overflow-y-auto bg-gray-0">
         <div className="p-2">
           {messages.length > 0 &&
             messages

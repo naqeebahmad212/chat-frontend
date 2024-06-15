@@ -86,12 +86,12 @@ export default function Home({
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between h-screen relative">
         {friendsActive && (
           <div
             className={` 
             ${!isMobile ? "w-[320px]" : "w-full "}
-             bg-gray-100 border-r h-screen overflow-y-auto transition-all duration-200 ease-in `}
+             bg-gray-100 border-r h-full overflow-y-auto transition-all duration-200 ease-in `}
           >
             <div className="header flex items-center justify-between drop-shadow-lg p-3 border-b">
               {isSidebarOpen && <span>Chats</span>}
