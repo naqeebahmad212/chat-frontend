@@ -162,7 +162,7 @@ const Mian = ({
     );
 
   return (
-    <div className="flex-1 bg-gray-100 h-full">
+    <div className="flex-1 bg-gray-100 h-[90%]">
       <div className="header w-full border-b drop-shadow-lg flex items-center justify-between sticky top-0 p-3 bg-gray-100 z-[999]">
         <div className="flex items-center gap-2">
           {" "}
